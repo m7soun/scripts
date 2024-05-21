@@ -28,7 +28,7 @@ foreach ($block in $deploymentBlocks)
         Write-Host "Pulling Docker image: $imageNameWithTag"
         docker pull $imageNameWithTag
         $newImageName = $imageNameWithTag -replace 'gcr\.io/devops-218510/', ''
-        docker tag "$( $imageNameWithTag )" "954254635138.dkr.ecr.eu-west-1.amazonaws.com/$( $newImageName )"
+        docker tag "$( $imageNameWithTag )" "..repo../$( $newImageName )"
 
         $newImageNameWithoutTag = $newImageName -replace ':.*', ''
 
@@ -39,8 +39,8 @@ foreach ($block in $deploymentBlocks)
             aws ecr create-repository --repository-name ${newImageNameWithoutTag} --profile devops
         }
 
-        docker push "954254635138.dkr.ecr.eu-west-1.amazonaws.com/$( $newImageName )"
-        docker rmi "954254635138.dkr.ecr.eu-west-1.amazonaws.com/$( $newImageName )"
+        docker push "..repo../$( $newImageName )"
+        docker rmi "..repo../$( $newImageName )"
         docker rmi "$( $imageNameWithTag )"
     }
 }
